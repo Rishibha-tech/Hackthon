@@ -53,6 +53,12 @@ def save_as_npz(image_data, labels, output_path):
     """
     np.savez(output_path, images=image_data, labels=labels)
     print(f"Data saved as {output_path}")
+    # Load the .npz file
+    data = np.load(output_file, allow_pickle=True)  # use allow_pickle if data contains objects
+
+    # Print the keys and check their contents
+    for key in data.files:
+        print(key, data[key])
 
 # Example usage:
 real_dir = 'data/processed/real'  # Directory for real signatures

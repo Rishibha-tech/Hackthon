@@ -14,10 +14,10 @@ def load_data(file_path):
         Tuple: Test features and labels.
     """
     data = np.load(file_path)
-    X_1_test = data['X_1_test']
-    X_2_test = data['X_2_test']
-    y_test = data['y_test']
-    return (X_1_test, X_2_test), y_test
+    X_test = data['images']
+    y_test = data['labels']
+    #y_test = data['y_test']
+    return X_test, y_test
 
 def evaluate_model(model_path, data_path):
     """
@@ -32,19 +32,19 @@ def evaluate_model(model_path, data_path):
     print("Model loaded successfully.")
 
     # Load test data
-    (X_1_test, X_2_test), y_test = load_data(data_path)
+    X_test, y_test = load_data(data_path)
 
     # Reshape inputs if necessary
-    X_1_test = X_1_test.reshape(-1, 128, 128, 1)  # Adjust if your input shape differs
-    X_2_test = X_2_test.reshape(-1, 128, 128, 1)
+    X_1_test = X_test.reshape(-1, 128, 128, 1)  # Adjust if your input shape differs
+   # X_2_test = X_2_test.reshape(-1, 128, 128, 1)
 
     # Evaluate the model
     print("Evaluating model...")
-    test_loss, test_accuracy = model.evaluate([X_1_test, X_2_test], y_test, verbose=1)
+    test_loss, test_accuracy = model.evaluate(X_test, y_test, verbose=1)
     print(f"Test Accuracy: {test_accuracy * 100:.2f}%")
 
     # Predict and generate metrics
-    predictions = model.predict([X_1_test, X_2_test])
+    predictions = model.predict([X_1_test])
     y_pred = np.argmax(predictions, axis=1)
 
     print("Classification Report:")

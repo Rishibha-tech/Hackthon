@@ -30,8 +30,12 @@ def main():
     image_data, labels = load_and_preprocess_images(os.path.join(processed_dir,'real'), os.path.join(processed_dir, 'forged'));
     output_file = os.path.join(processed_dir, 'signature_data.npz')
 
+
+
     # Save the processed data as an .npz file
     save_as_npz(image_data, labels, output_file)
+
+
 
     # Evaluation
     print("Evaluating the model...")
